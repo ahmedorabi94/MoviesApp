@@ -1,16 +1,19 @@
 package com.example.moviesapp.features.movies_details.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
+import com.example.moviesapp.core.data.api.Resource
+import com.example.moviesapp.core.domain.model.movies_details.MoviesDetailsResponse
 import com.example.moviesapp.databinding.FragmentMoviesDetailsBinding
 import com.example.moviesapp.features.movies_details.viewmodel.MoviesDetailsViewModel
+import com.example.moviesapp.features.movies_list.ui.MOVIE_ID_KEY
+import com.example.moviesapp.features.utils.setPoster
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MoviesDetailsFragment : Fragment() {
@@ -23,7 +26,7 @@ class MoviesDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            itemId = it.getInt("itemId")
+            itemId = it.getInt(MOVIE_ID_KEY)
         }
     }
 
@@ -32,24 +35,27 @@ class MoviesDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMoviesDetailsBinding.inflate(inflater, container, false)
-        Timber.e("Here Id " + itemId)
-
 
         viewModel.getMoviesDetailsResponse(itemId ?: 0)
 
-        viewModel.moviesResponse.observe(viewLifecycleOwner){
+        viewModel.moviesResponse.observe(viewLifecycleOwner) {
             it?.let {
 
-                Timber.e(it.data.toString())
+                when (it.status) {
+                    Resource.Status.LOADING -> {
+                        showLoading()
+                    }
+                    Resource.Status.SUCCESS -> {
+                        hideLoading()
+                        updateUI(it.data)
+                    }
+                    Resource.Status.ERROR -> {
+                        hideLoading()
+                        Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
 
-                binding.tileTv.text = it.data?.title
-                binding.releaseDateTv.text = it.data?.release_date
-                binding.overviewTv.text = it.data?.overview
 
-
-                val baseUrl = "http://image.tmdb.org/t/p/w500"
-                val finalUrl = baseUrl + it.data?.poster_path
-                Glide.with(binding.root).load(finalUrl).into(binding.posterIv)
             }
         }
 
@@ -57,6 +63,32 @@ class MoviesDetailsFragment : Fragment() {
         return binding.root
 
     }
+
+    private fun updateUI(response: MoviesDetailsResponse?) {
+        response?.let {
+            binding.tileTv.text = response.title
+            binding.releaseDateTv.text = response.release_date
+            binding.overviewTv.text = response.overview
+
+            binding.posterIv.setPoster(response.poster_path)
+
+        }
+
+    }
+
+    private fun showLoading() {
+        binding.progressbar.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        binding.progressbar.visibility = View.GONE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 
 
 }

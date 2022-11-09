@@ -3,7 +3,7 @@ package com.example.moviesapp.features.movies_list.di
 
 import com.example.moviesapp.core.data.api.ApiService
 import com.example.moviesapp.core.repo.movies_details.MoviesDetailsDataSource
-import com.example.moviesapp.core.repo.remote.MoviesListDataSource
+import com.example.moviesapp.core.repo.movies_list.MoviesListDataSource
 import com.example.moviesapp.features.movies_details.framework.MoviesDetailsRepositoryImpl
 import com.example.moviesapp.features.movies_list.framework.MoviesListRepositoryImpl
 import dagger.Module

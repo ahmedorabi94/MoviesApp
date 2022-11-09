@@ -1,4 +1,4 @@
-package com.example.moviesapp.core.domain.usecases.remote
+package com.example.moviesapp.core.domain.usecases
 
 import com.example.moviesapp.core.data.api.Resource
 import com.example.moviesapp.core.domain.model.movies_details.MoviesDetailsResponse

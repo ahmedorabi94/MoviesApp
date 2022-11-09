@@ -1,6 +1,7 @@
 package com.example.moviesapp.core.di
 
 import com.example.moviesapp.core.data.api.ApiService
+import com.example.moviesapp.features.utils.BASE_URL
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -52,7 +53,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(gson: Gson, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.moviesapp.core.domain.model.movies_list.Result
 import com.example.moviesapp.databinding.MovieItemBinding
-import timber.log.Timber
+import com.example.moviesapp.features.utils.setPoster
 
 class MovieAdapter(private val callback: (movieId: Int) -> Unit) :
     ListAdapter<Result, MovieAdapter.MyViewHolder>(
@@ -55,12 +54,8 @@ class MovieAdapter(private val callback: (movieId: Int) -> Unit) :
             binding.titleTV.text = item.title
             binding.yearTV.text = item.release_date
 
-            val baseUrl = "http://image.tmdb.org/t/p/w500"
-            val finalUrl = baseUrl + item.poster_path
+            binding.posterIv.setPoster(item.poster_path)
 
-            Timber.e(finalUrl)
-
-            Glide.with(binding.root).load(finalUrl).into(binding.posterIv)
 
         }
 

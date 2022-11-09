@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviesapp.core.data.api.Resource
 import com.example.moviesapp.core.domain.model.movies_list.MoviesListResponse
-import com.example.moviesapp.core.domain.usecases.remote.GetMoviesListUseCase
+import com.example.moviesapp.core.domain.usecases.GetMoviesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.example.moviesapp.core.repo.remote
+package com.example.moviesapp.core.repo.movies_list
 
 import javax.inject.Inject
 
