@@ -1,6 +1,5 @@
 package com.example.moviesapp.core.repo.movies_list
 
-import com.example.moviesapp.features.movies_list.models.Genre
 import javax.inject.Inject
 
 class MoviesListRepository @Inject constructor(private val dataSource: MoviesListDataSource) {

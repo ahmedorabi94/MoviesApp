@@ -18,7 +18,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.moviesapp.features.movies_details.ui.DetailsScreen
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -26,42 +25,42 @@ import com.example.moviesapp.features.movies_details.ui.DetailsScreen
 fun SearchAppBar(
     state: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue()),
     onQueryChange: (String) -> Unit = {},
-    onExecuteSearch: () -> Unit = {},
-    modifier: Modifier = Modifier.fillMaxWidth()
+    onExecuteSearch: () -> Unit = {}
 ) {
-
     Surface(
-        modifier = modifier,
-        elevation = 8.dp
-    ) {
-        val keyboardController = LocalSoftwareKeyboardController.current
-            Box(
-                modifier = modifier
-            ) {
-                TextField(
-                    value = state.value,onValueChange = { value ->
-                        state.value = value
-                        onQueryChange(state.value.text)
-                    },
-                    label = { Text(text = "Search...") },
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            onExecuteSearch()
-                            keyboardController?.hide()
-                        }
-                    ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done
-                    ),
-                    leadingIcon = {
-                        Icon(Icons.Filled.Search, contentDescription = "Search")
-                    },
-                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface) ,
-                    colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface)
-                )
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colors.secondary,
+        elevation = 8.dp,
 
-            }
+        ) {
+        val keyboardController = LocalSoftwareKeyboardController.current
+        Box(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            TextField(modifier = Modifier.fillMaxWidth(),
+                value = state.value, onValueChange = { value ->
+                    state.value = value
+                    onQueryChange(state.value.text)
+                },
+                label = { Text(text = "Search...") },
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        onExecuteSearch()
+                        keyboardController?.hide()
+                    }
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                leadingIcon = {
+                    Icon(Icons.Filled.Search, contentDescription = "Search")
+                },
+                textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.surface)
+            )
+
+        }
 
 
     }
