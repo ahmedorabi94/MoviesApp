@@ -39,14 +39,14 @@ fun MovieCard(item: Result? = null, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(15.dp)
+            .padding(6.dp)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = {
                     isLongClick = true
                 },
             ),
-        elevation = 10.dp,
+        elevation = 8.dp,
         shape = RoundedCornerShape(10.dp),
     ) {
 
