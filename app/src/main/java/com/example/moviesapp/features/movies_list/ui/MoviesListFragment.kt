@@ -127,8 +127,7 @@ class MoviesListFragment : Fragment() {
 
             when (val state = movieList.loadState.refresh) { //FIRST LOAD
                 is LoadState.Error -> {
-                    //TODO Error Item
-                    //state.error to get error message
+                    Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_LONG).show()
                 }
 
                 is LoadState.Loading -> { // Loading UI
@@ -156,8 +155,7 @@ class MoviesListFragment : Fragment() {
 
             when (val state = movieList.loadState.append) { // Pagination
                 is LoadState.Error -> {
-                    //TODO Pagination Error Item
-                    //state.error to get error message
+                    Toast.makeText(requireContext(), state.error.message, Toast.LENGTH_LONG).show()
                 }
 
                 is LoadState.Loading -> { // Pagination Loading UI
