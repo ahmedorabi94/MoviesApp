@@ -37,7 +37,6 @@ class MoviesListViewModelTest {
     @Mock
     private lateinit var apiMoviesObserver: Observer<Resource<GenresResponse>>
 
-    @Mock
 
     private lateinit var viewModel: MoviesListViewModel
 
@@ -52,7 +51,7 @@ class MoviesListViewModelTest {
 
     @Before
     fun setup() {
-        // viewModel = MoviesListViewModel(getMoviesListUseCase,getGenresListUseCase)
+        //  viewModel = MoviesListViewModel(getMoviesListUseCase,getGenresListUseCase)
     }
 
     @Test
