@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import com.example.moviesapp.core.domain.model.movies_list.Result
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.Locale
 
 private const val TMDB_STARTING_PAGE_INDEX = 1
 
@@ -13,7 +14,7 @@ class MoviesPagingSource(
     private val service: ApiService,
     private val genre: String,
     private val query: String,
-    private val isSearch :Boolean = false
+    private val isSearch: Boolean = false
 ) : PagingSource<Int, Result>() {
 
 
@@ -22,15 +23,15 @@ class MoviesPagingSource(
 
         return try {
 
-            val response = if (isSearch){
+            val response = if (isSearch) {
                 service.getSearchMovieAsync(
                     with_genres = genre,
-                    language = "en-US", page = page, query = query
+                    language = Locale.getDefault().language, page = page, query = query
                 )
-            }else{
+            } else {
                 service.getMoviesListAsync(
                     with_genres = genre,
-                    language = "en-US", page = page, query = query
+                    language = Locale.getDefault().language, page = page, query = query
                 )
             }
 
