@@ -1,4 +1,4 @@
-package com.example.moviesapp.features.movies_details.ui
+package com.example.moviesapp.features.movies_details.presentation.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,4 +1,4 @@
-package com.example.moviesapp.features.movies_list.ui
+package com.example.moviesapp.features.movies_list.presentation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,7 +35,10 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.moviesapp.R
-import com.example.moviesapp.features.movies_list.viewmodel.MoviesListViewModel
+import com.example.moviesapp.features.movies_list.presentation.ui.components.ChipGroup
+import com.example.moviesapp.features.movies_list.presentation.ui.components.MovieCard
+import com.example.moviesapp.features.movies_list.presentation.ui.components.SearchAppBar
+import com.example.moviesapp.features.movies_list.presentation.viewmodel.MoviesListViewModel
 import com.example.moviesapp.features.utils.MovieSearch
 import com.orabi.core.data.api.Resource
 import com.orabi.core.domain.model.movies_list.Result

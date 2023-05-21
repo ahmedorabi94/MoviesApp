@@ -1,4 +1,4 @@
-package com.example.moviesapp.features.movies_details.ui
+package com.example.moviesapp.features.movies_details.presentation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.moviesapp.features.movies_details.viewmodel.MoviesDetailsViewModel
-import com.example.moviesapp.features.movies_list.ui.MOVIE_ID_KEY
+import com.example.moviesapp.features.movies_details.presentation.ui.components.DetailsScreen
+import com.example.moviesapp.features.movies_details.presentation.viewmodel.MoviesDetailsViewModel
+import com.example.moviesapp.features.movies_list.presentation.ui.MOVIE_ID_KEY
 import com.orabi.core.data.api.Resource
 import dagger.hilt.android.AndroidEntryPoint
 

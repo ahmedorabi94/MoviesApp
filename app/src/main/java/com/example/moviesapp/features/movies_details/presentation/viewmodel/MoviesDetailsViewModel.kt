@@ -1,4 +1,4 @@
-package com.example.moviesapp.features.movies_details.viewmodel
+package com.example.moviesapp.features.movies_details.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,9 +23,9 @@ class MoviesDetailsViewModel @Inject constructor(
         get() = _moviesResponse
 
 
-    fun getMoviesDetailsResponse(name: Int) {
+    fun getMoviesDetailsResponse(id: Int) {
         viewModelScope.launch {
-            useCase.invoke(name)
+            useCase.invoke(id)
                 .collect { response ->
                     Timber.e(response.toString())
                     _moviesResponse.value = response

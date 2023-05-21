@@ -1,4 +1,4 @@
-package com.example.moviesapp.features.movies_list.ui
+package com.example.moviesapp.features.movies_list.presentation.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
