@@ -1,12 +1,17 @@
 package com.example.moviesapp.features.movies_list.framework
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.moviesapp.core.data.api.ApiService
+import com.example.moviesapp.core.data.api.MoviesPagingSource
 import com.example.moviesapp.core.data.api.Resource
 import com.example.moviesapp.core.data.api.ResultWrapper
 import com.example.moviesapp.core.data.api.safeApiCall
-import com.example.moviesapp.core.domain.model.movies_list.MoviesListResponse
+import com.example.moviesapp.core.domain.model.movies_list.Result
 import com.example.moviesapp.core.repo.movies_list.MoviesListDataSource
 import com.example.moviesapp.features.movies_list.models.GenresResponse
+import com.example.moviesapp.features.utils.NETWORK_PAGE_SIZE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,64 +23,21 @@ class MoviesListRepositoryImpl @Inject constructor(private val apiService: ApiSe
     MoviesListDataSource {
 
 
-    override suspend fun getMoviesListResponse(genre: String): Flow<Resource<MoviesListResponse>> {
-        return flow {
+    override fun getMovies(
+        genre: String,
+        query: String,
+        isSearch: Boolean
+    ): Flow<PagingData<Result>> {
 
-            emit(Resource.loading(null))
-
-            val response = safeApiCall(Dispatchers.IO) {
-                apiService.getMoviesListAsync(genre)
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                MoviesPagingSource(service = apiService, genre, query, isSearch)
             }
-
-            when (response) {
-                is ResultWrapper.Success -> {
-                    emit(Resource.success(response.value))
-                }
-                is ResultWrapper.Error -> {
-                    emit(Resource.error(response.error?.message ?: "Unknown Error"))
-
-                }
-                is ResultWrapper.NetworkError -> {
-                    emit(Resource.error("NetworkError"))
-
-                }
-                ResultWrapper.NoContentError -> {
-                    emit(Resource.error("NoContentError"))
-
-                }
-            }
-
-        }.flowOn(Dispatchers.IO)
-    }
-
-    override suspend fun getSearchMoviesListResponse(query: String): Flow<Resource<MoviesListResponse>> {
-        return flow {
-
-            emit(Resource.loading(null))
-
-            val response = safeApiCall(Dispatchers.IO) {
-                apiService.getSearchMovieAsync(query)
-            }
-
-            when (response) {
-                is ResultWrapper.Success -> {
-                    emit(Resource.success(response.value))
-                }
-                is ResultWrapper.Error -> {
-                    emit(Resource.error(response.error?.message ?: "Unknown Error"))
-
-                }
-                is ResultWrapper.NetworkError -> {
-                    emit(Resource.error("NetworkError"))
-
-                }
-                ResultWrapper.NoContentError -> {
-                    emit(Resource.error("NoContentError"))
-
-                }
-            }
-
-        }.flowOn(Dispatchers.IO)
+        ).flow
     }
 
     override suspend fun getGenresListResponse(): Flow<Resource<GenresResponse>> {
@@ -91,14 +53,17 @@ class MoviesListRepositoryImpl @Inject constructor(private val apiService: ApiSe
                 is ResultWrapper.Success -> {
                     emit(Resource.success(response.value))
                 }
+
                 is ResultWrapper.Error -> {
                     emit(Resource.error(response.error?.message ?: "Unknown Error"))
 
                 }
+
                 is ResultWrapper.NetworkError -> {
                     emit(Resource.error("NetworkError"))
 
                 }
+
                 ResultWrapper.NoContentError -> {
                     emit(Resource.error("NoContentError"))
 

@@ -11,13 +11,22 @@ interface ApiService {
 
 
     @GET("discover/movie?api_key=c9856d0cb57c3f14bf75bdc6c063b8f3")
-    suspend fun getMoviesListAsync(@Query("with_genres") with_genres : String = "28"): MoviesListResponse
+    suspend fun getMoviesListAsync(
+        @Query("with_genres") with_genres: String = "28",
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("query") query: String = ""
+    ): MoviesListResponse
 
     @GET("genre/movie/list?api_key=c9856d0cb57c3f14bf75bdc6c063b8f3")
     suspend fun getGenresListAsync(): GenresResponse
 
     @GET("search/movie?api_key=c9856d0cb57c3f14bf75bdc6c063b8f3")
-    suspend fun getSearchMovieAsync(@Query("query") query : String): MoviesListResponse
+    suspend fun getSearchMovieAsync(
+        @Query("query") query: String, @Query("with_genres") with_genres: String = "28",
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+    ): MoviesListResponse
 
 
     @GET("movie/{id}?api_key=c9856d0cb57c3f14bf75bdc6c063b8f3")

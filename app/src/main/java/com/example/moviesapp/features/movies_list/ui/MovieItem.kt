@@ -1,6 +1,8 @@
 package com.example.moviesapp.features.movies_list.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,15 +25,32 @@ import androidx.compose.ui.unit.dp
 import com.example.moviesapp.core.domain.model.movies_list.Result
 import com.example.moviesapp.features.utils.SetMovieCell
 import com.example.moviesapp.features.utils.SetMovieImage
+import com.example.moviesapp.features.utils.ShowMySnackBar
+import com.example.moviesapp.features.utils.SnackbarDemo
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
-
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MovieCard(item: Result? = null, onClick: () -> Unit) {
+fun MovieCard(item: Result? = null, onClick: () -> Unit, onLongClick: () -> Unit) {
+
+    var isLongClick by remember { mutableStateOf(false) }
+
+    if (isLongClick) {
+        ShowMySnackBar()
+        //SnackbarDemo()
+        //onLongClick()
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(15.dp)
-            .clickable(onClick = onClick),
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = {
+                    isLongClick = true
+                },
+            ),
         elevation = 10.dp,
         shape = RoundedCornerShape(10.dp),
     ) {
@@ -82,6 +103,6 @@ fun MovieCard(item: Result? = null, onClick: () -> Unit) {
 @Composable
 private fun MoviePreview() {
     MaterialTheme {
-        MovieCard(onClick = {})
+        MovieCard(onClick = {}, onLongClick = {})
     }
 }

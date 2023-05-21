@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -21,15 +23,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation.findNavController
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.example.moviesapp.R
 import com.example.moviesapp.core.data.api.Resource
 import com.example.moviesapp.core.domain.model.movies_list.Result
 import com.example.moviesapp.features.movies_list.viewmodel.MoviesListViewModel
+import com.example.moviesapp.features.utils.MovieSearch
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -62,9 +71,12 @@ class MoviesListFragment : Fragment() {
             topBar = {
                 TopAppBar {
                     val textState = remember { mutableStateOf(TextFieldValue("")) }
-                    SearchAppBar( state = textState, onQueryChange = {
+                    SearchAppBar(state = textState, onQueryChange = {
                         Timber.e("onTriggerNextPage$it")
-                        viewModel.getSearchMoviesListFlow(it)
+                        viewModel.isSearch = true
+                        viewModel.movieSearch.value =
+                            MovieSearch(viewModel.movieSearch.value.genre, it)
+
                     }, onExecuteSearch = {
                         Timber.e("onExecuteSearch")
                     })
@@ -82,43 +94,92 @@ class MoviesListFragment : Fragment() {
 
 
     @Composable
-    fun SetMovieList(movieList: List<Result>) {
+    fun ObserveMovieListViewModel() {
+        val movies2 = viewModel.items.collectAsLazyPagingItems()
 
-        LazyColumn(modifier = Modifier.fillMaxHeight()) {
-            items(movieList) { movie ->
-                MovieCard(movie) {
-                    val bundle = Bundle()
-                    bundle.putInt(MOVIE_ID_KEY, movie.id)
+        SetMovieList(movieList = movies2)
 
-                    findNavController(requireView())
-                        .navigate(R.id.action_moviesListFragment_to_moviesDetailsFragment, bundle)
-
-                }
-            }
-        }
 
     }
 
     @Composable
-    fun ObserveMovieListViewModel() {
+    fun SetMovieList(movieList: LazyPagingItems<Result>) {
 
-        val response = viewModel.moviesResponse.observeAsState()
+        LazyColumn(modifier = Modifier.fillMaxHeight()) {
+            items(items = movieList) { movie ->
 
-        when (response.value?.status) {
-            Resource.Status.LOADING -> {
-                ShowLoading()
+                movie?.let {
+                    MovieCard(it, onClick = {
+                        val bundle = Bundle()
+                        bundle.putInt(MOVIE_ID_KEY, it.id)
+
+                        findNavController(requireView())
+                            .navigate(
+                                R.id.action_moviesListFragment_to_moviesDetailsFragment,
+                                bundle
+                            )
+                    }, onLongClick = {
+                        // ShowMySnackBar()
+                    })
+                }
+
+
             }
 
-            Resource.Status.SUCCESS -> {
-                SetMovieList(movieList = response.value?.data?.results!!)
+
+            when (val state = movieList.loadState.refresh) { //FIRST LOAD
+                is LoadState.Error -> {
+                    //TODO Error Item
+                    //state.error to get error message
+                }
+
+                is LoadState.Loading -> { // Loading UI
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillParentMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(8.dp),
+                                text = "Refresh Loading"
+                            )
+
+                            CircularProgressIndicator(color = Color.Black)
+                        }
+                    }
+                }
+
+                else -> {}
             }
 
-            Resource.Status.ERROR -> {
-                Toast.makeText(activity, response.value?.message, Toast.LENGTH_LONG)
-                    .show()
+
+            when (val state = movieList.loadState.append) { // Pagination
+                is LoadState.Error -> {
+                    //TODO Pagination Error Item
+                    //state.error to get error message
+                }
+
+                is LoadState.Loading -> { // Pagination Loading UI
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text(text = "Pagination Loading")
+
+                            CircularProgressIndicator(color = Color.Black)
+                        }
+                    }
+                }
+
+                else -> {}
             }
 
-            else -> {}
         }
 
 
@@ -137,7 +198,11 @@ class MoviesListFragment : Fragment() {
             Resource.Status.SUCCESS -> {
                 ChipGroup(genres = response.value?.data?.genres!!, onSelectedChanged = {
                     Timber.e("Genre $it")
-                    viewModel.getMoviesListFlow(it.toString())
+                    viewModel.isSearch = false
+                    viewModel.movieSearch.value =
+                        MovieSearch(it.toString(), viewModel.movieSearch.value.query)
+
+
                 })
             }
 
