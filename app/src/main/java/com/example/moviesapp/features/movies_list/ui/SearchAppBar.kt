@@ -68,7 +68,7 @@ fun SearchAppBar(
 
 @Preview
 @Composable
-private fun PlantNamePreview() {
+private fun SearchPreview() {
     MaterialTheme {
         SearchAppBar()
     }

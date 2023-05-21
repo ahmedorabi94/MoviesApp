@@ -16,9 +16,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.moviesapp.core.domain.model.movies_details.MoviesDetailsResponse
 import com.example.moviesapp.features.utils.SetMovieCell
 import com.example.moviesapp.features.utils.SetMovieImage
+import com.orabi.core.domain.model.movies_details.MoviesDetailsResponse
 
 
 @Composable

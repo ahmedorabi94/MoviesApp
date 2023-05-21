@@ -35,10 +35,10 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.moviesapp.R
-import com.example.moviesapp.core.data.api.Resource
-import com.example.moviesapp.core.domain.model.movies_list.Result
 import com.example.moviesapp.features.movies_list.viewmodel.MoviesListViewModel
 import com.example.moviesapp.features.utils.MovieSearch
+import com.orabi.core.data.api.Resource
+import com.orabi.core.domain.model.movies_list.Result
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

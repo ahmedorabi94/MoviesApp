@@ -1,9 +1,9 @@
 package com.example.moviesapp.features.movies_list.di
 
 
-import com.example.moviesapp.core.data.api.ApiService
-import com.example.moviesapp.core.repo.movies_details.MoviesDetailsDataSource
-import com.example.moviesapp.core.repo.movies_list.MoviesListDataSource
+import com.orabi.core.data.api.ApiService
+import com.orabi.core.repo.movies_details.MoviesDetailsDataSource
+import com.orabi.core.repo.movies_list.MoviesListDataSource
 import com.example.moviesapp.features.movies_details.framework.MoviesDetailsRepositoryImpl
 import com.example.moviesapp.features.movies_list.framework.MoviesListRepositoryImpl
 import dagger.Module

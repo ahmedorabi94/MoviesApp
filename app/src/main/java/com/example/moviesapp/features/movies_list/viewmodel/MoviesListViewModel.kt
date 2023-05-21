@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.moviesapp.core.data.api.Resource
-import com.example.moviesapp.core.domain.model.movies_list.Result
-import com.example.moviesapp.core.domain.usecases.GetGenresListUseCase
-import com.example.moviesapp.core.domain.usecases.GetMoviesListUseCase
-import com.example.moviesapp.features.movies_list.models.GenresResponse
 import com.example.moviesapp.features.utils.MovieSearch
+import com.orabi.core.data.api.Resource
+import com.orabi.core.domain.model.genres_list.GenresResponse
+import com.orabi.core.domain.model.movies_list.Result
+import com.orabi.core.domain.usecases.GetGenresListUseCase
+import com.orabi.core.domain.usecases.GetMoviesListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

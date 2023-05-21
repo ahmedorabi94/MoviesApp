@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.moviesapp.features.movies_list.models.Genre
+import com.orabi.core.domain.model.genres_list.Genre
 
 @Preview(showBackground = true)
 @Composable

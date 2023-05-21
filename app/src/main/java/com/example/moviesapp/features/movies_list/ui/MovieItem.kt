@@ -1,7 +1,6 @@
 package com.example.moviesapp.features.movies_list.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,11 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.moviesapp.core.domain.model.movies_list.Result
+import com.orabi.core.domain.model.movies_list.Result
 import com.example.moviesapp.features.utils.SetMovieCell
 import com.example.moviesapp.features.utils.SetMovieImage
 import com.example.moviesapp.features.utils.ShowMySnackBar
-import com.example.moviesapp.features.utils.SnackbarDemo
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 

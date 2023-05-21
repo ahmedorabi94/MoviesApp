@@ -42,7 +42,6 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
-const val BASE_URL = "https://api.themoviedb.org/3/"
 const val NETWORK_PAGE_SIZE = 20
 
 @Composable

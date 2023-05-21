@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.moviesapp.core.data.api.Resource
 import com.example.moviesapp.features.movies_details.viewmodel.MoviesDetailsViewModel
 import com.example.moviesapp.features.movies_list.ui.MOVIE_ID_KEY
+import com.orabi.core.data.api.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

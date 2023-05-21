@@ -1,11 +1,11 @@
 package com.example.moviesapp.features.movies_details.framework
 
-import com.example.moviesapp.core.data.api.ApiService
-import com.example.moviesapp.core.data.api.Resource
-import com.example.moviesapp.core.data.api.ResultWrapper
-import com.example.moviesapp.core.data.api.safeApiCall
-import com.example.moviesapp.core.domain.model.movies_details.MoviesDetailsResponse
-import com.example.moviesapp.core.repo.movies_details.MoviesDetailsDataSource
+import com.orabi.core.data.api.ApiService
+import com.orabi.core.data.api.Resource
+import com.orabi.core.data.api.ResultWrapper
+import com.orabi.core.data.api.safeApiCall
+import com.orabi.core.domain.model.movies_details.MoviesDetailsResponse
+import com.orabi.core.repo.movies_details.MoviesDetailsDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
