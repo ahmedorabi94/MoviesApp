@@ -14,30 +14,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.orabi.core.domain.model.movies_list.Result
 import com.example.moviesapp.features.utils.SetMovieCell
 import com.example.moviesapp.features.utils.SetMovieImage
 import com.example.moviesapp.features.utils.ShowMySnackBar
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import com.orabi.core.domain.model.movies_list.Result
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MovieCard(item: Result? = null, onClick: () -> Unit, onLongClick: () -> Unit) {
+fun MovieCard(item: Result? = null, onClick: () -> Unit) {
 
     var isLongClick by remember { mutableStateOf(false) }
-
     if (isLongClick) {
-        ShowMySnackBar()
-        //SnackbarDemo()
-        //onLongClick()
+        ShowMySnackBar(message = item?.title ?: "", actionLabel = "dismiss")
     }
     Card(
         modifier = Modifier
@@ -101,6 +98,6 @@ fun MovieCard(item: Result? = null, onClick: () -> Unit, onLongClick: () -> Unit
 @Composable
 private fun MoviePreview() {
     MaterialTheme {
-        MovieCard(onClick = {}, onLongClick = {})
+        MovieCard(onClick = {})
     }
 }

@@ -118,8 +118,6 @@ class MoviesListFragment : Fragment() {
                                 R.id.action_moviesListFragment_to_moviesDetailsFragment,
                                 bundle
                             )
-                    }, onLongClick = {
-                        // ShowMySnackBar()
                     })
                 }
 
